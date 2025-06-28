@@ -1,0 +1,50 @@
+﻿@model PasswordManagerApp.Models.PasswordEntry
+
+@{
+    ViewData["Title"] = "Şifreyi Düzenle";
+    Layout = "_Layout";
+}
+
+<h2 class="mb-4">✏️ Şifreyi Düzenle</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Başlık</label>
+        <input asp-for="Title" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">URL</label>
+        <input asp-for="Url" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Kategori</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" class="form-select"></select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Kullanıcı Adı</label>
+        <input asp-for="Username" class="form-control" required />
+    </div>
+    <div class="mb-3 position-relative">
+        <label class="form-label">Şifre</label>
+        <input asp-for="Password" id="passwordInput" class="form-control" required />
+        <button type="button" class="btn btn-info btn-sm position-absolute top-50 end-0 translate-middle-y me-2" onclick="generatePassword()">Şifre Üret</button>
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>
+
+@section Scripts {
+   @*  <text>
+        <script>
+                function generatePassword(length = 12) {
+                    const charset = $"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%^&*";
+                    let password = "";
+                    for (let i = 0, n = charset.length; i < length; ++i) {
+                        password += charset.charAt(Math.floor(Math.random() * n));
+                    }
+                    document.getElementById("passwordInput").value = password;
+                }
+            </script>
+    </text> *@
+}

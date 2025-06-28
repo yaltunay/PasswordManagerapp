@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white text-center">
+                <h4>Kayıt Ol</h4>
+            </div>
+            <div class="card-body">
+                <form id="registerForm" method="post" asp-controller="Account" asp-action="Register">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Kullanıcı Adı</label>
+                        <input type="text" name="username" id="username" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Şifre</label>
+                        <input type="password" name="password" id="password" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordConfirm" class="form-label">Şifre (Tekrar)</label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" required />
+                        <div id="passwordMatchError" class="text-danger mt-1 d-none">Şifreler eşleşmiyor</div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Kayıt Ol</button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Zaten hesabın var mı? <a asp-controller="Account" asp-action="Login">Giriş Yap</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const passwordInput = $('#password');
+            const confirmPasswordInput = $('#passwordConfirm');
+            const errorDiv = $('#passwordMatchError');
+            const form = $('#registerForm');
+
+            // Her karakter girdiğinde şifre eşleşme kontrolü
+            confirmPasswordInput.on('input', function () {
+                if (passwordInput.val() !== confirmPasswordInput.val()) {
+                    errorDiv.removeClass('d-none').show();
+                } else {
+                    errorDiv.addClass('d-none').hide();
+                }
+            });
+
+            // Form submit edilirken tekrar kontrol
+            form.off().on('submit', function (e) {
+                debugger;
+                if (passwordInput.val() !== confirmPasswordInput.val()) {
+                    errorDiv.show();
+                    e.preventDefault(); // Gönderimi durdur
+                }
+            });
+        });
+    </script>
+}

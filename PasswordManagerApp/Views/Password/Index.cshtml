@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PasswordManagerApp.Models.PasswordEntry>
+@{
+    ViewData["Title"] = "Şifrelerim";
+    Layout = "_Layout";
+}
+
+<h2 class="mb-4">🔐 Şifrelerim</h2>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Başlık veya URL ile arama..." value="@ViewData["CurrentFilter"]" />
+        <button type="submit" class="btn btn-outline-secondary">Ara</button>
+    </div>
+</form>
+
+<a asp-action="Create" class="btn btn-primary mb-3">➕ Yeni Şifre Ekle</a>
+
+<table class="table table-bordered table-striped table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Başlık</th>
+            <th>URL</th>
+            <th>Kategori</th>
+            <th>Kullanıcı Adı</th>
+            <th>Şifre</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td><a href="@item.Url" target="_blank">@item.Url</a></td>
+                <td>@item.Category?.Name</td>
+                <td>@item.Username</td>
+                <td>••••••••</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
